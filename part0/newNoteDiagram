@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Writes note and clicks Save
+    Browser->>Server: POST /new_note
+    Server->>Browser: 302 Redirect to /notes
+    Browser->>Server: GET /notes
+    Server->>Browser: HTML document
+    Browser->>User: Renders updated notes page
