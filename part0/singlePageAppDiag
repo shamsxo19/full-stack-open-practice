@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Opens /spa
+    Browser->>Server: GET /spa
+    Server->>Browser: HTML document
+
+    Browser->>Server: GET main.js
+    Server->>Browser: JavaScript file
+
+    Browser->>Server: GET data.json
+    Server->>Browser: JSON data (notes)
+
+    Browser->>User: Renders notes using JavaScript
