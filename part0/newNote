@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Writes note and clicks Save
+    Browser->>Server: POST /new_note_spa (JSON)
+    Server->>Browser: 201 Created
+    Browser->>User: Updates notes list using JavaScript
