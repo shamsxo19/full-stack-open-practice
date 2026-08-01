@@ -59,8 +59,6 @@ const App = () => {
   }
 
 
-
-
   const showNotification = (text, type = 'success') => {
   setNotification({ text, type })
   setTimeout(() => {
@@ -124,7 +122,7 @@ const App = () => {
       showNotification(`Added ${returnedPerson.name}`, 'success')
     })
     .catch(error => {
-      showNotification(`${error}`, 'error')
+      showNotification(error.response.data.error, 'error')
     })
   }
 }
