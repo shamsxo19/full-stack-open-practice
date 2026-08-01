@@ -11,8 +11,8 @@ app.use(morgan('tiny'))
 
 app.get('/api/persons', (req, res, next) => {
   Person.find({}).then(persons => {
-      res.json(persons)
-    })
+    res.json(persons)
+  })
     .catch(error => next(error))
 })
 
@@ -79,8 +79,8 @@ app.put('/api/persons/:id', (req, res, next) => {
     req.params.id,
     person,
     { new: true,
-    runValidators: true,
-    context: 'query' }
+      runValidators: true,
+      context: 'query' }
   )
     .then(updatedPerson => {
       res.json(updatedPerson)
@@ -89,7 +89,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 })
 
 const unknownEndpoint = (request, response) => {
-        response.status(404).send({ error: 'unknown endpoint' })
+  response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
 
