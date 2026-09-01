@@ -103,9 +103,43 @@ test('blog without url is not added', async () => {
     author: "Felix",
     likes: 3
   }
-
   await api
     .post('/api/blogs')
     .send(newBlog)
     .expect(400)
+})
+
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToDelete = blogsAtStart[0]
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+  const blogsAtEnd = await Blog.find({})
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1)
+  const ids = blogsAtEnd.map(b => b.id)
+  assert(!ids.includes(blogToDelete.id))
+})
+
+test('a blog\'s likes can be updated', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToUpdate = blogsAtStart[0]
+
+  const updatedBlog = {
+    ...blogToUpdate.toJSON(),
+    likes: blogToUpdate.likes + 1 
+  }
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(updatedBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await Blog.find({})
+  const blogAfterUpdate = blogsAtEnd.find(
+    blog => blog.id === blogToUpdate.id
+  )
+
+  assert.strictEqual(blogAfterUpdate.likes, blogToUpdate.likes + 1)
 })
